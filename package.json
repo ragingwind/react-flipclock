@@ -1,0 +1,15 @@
+{
+  "name": "react-flipclock",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel ./demo/index.html -p 8080"
+  },
+  "devDependencies": {
+    "microbundle": "^0.11.0",
+    "parcel-bundler": "^1.12.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "flipclock",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Jimmy Moon",
+  "license": "ISC",
+  "scripts": {
+    "build": "microbundle -o dist/ --name Flipclock --globals react=React --jsx",
+    "dev": "microbundle watch react=React --jsx ---sourcemap"
+  },
+  "source": "src/flipclock.jsx",
+  "main": "flipclock.js",
+  "module": "flipclock.mjs",
+  "unpkg": "flipclock.umd.js",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
