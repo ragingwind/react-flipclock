@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "author": "Jimmy Moon",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
-    "build": "microbundle -o dist/ --name Flipclock --globals react=React --jsx",
-    "dev": "microbundle watch react=React --jsx ---sourcemap"
+    "build": "microbundle -o dist/ --name Flipclock --globals react=React --jsx"
   },
   "source": "src/flipclock.jsx",
   "main": "flipclock.js",
