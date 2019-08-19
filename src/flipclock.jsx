@@ -1,177 +1,70 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
+import styles from './styles'
 
 const iterations = 1;
 
-const Flips = ({ anime, number, index, vis }) => {
-  useEffect(() => {
-    var keyframes = [
-      {
-        transform: 'perspective(200px) rotateX(0deg)',
-        // zIndex: 3
-        // opacity: '1',
-        // offset: 0
-      },
-      {
-        transform: 'perspective(200px) rotateX(-90deg)'
-        // offset: 0.4
-      },
-      {
-        transform: 'perspective(200px) rotateX(-180deg)',
-        // zIndex: 0
-        
-      }
-    ];
-    var keyframes2 = [
-      // {
-      //   transform: 'perspective(200px) rotateX(180deg)',
-      //   // zIndex: 3,
-      //   // opacity: '1',
-      //   // offset: 0
-      // },
-      {
-        transform: 'perspective(200px) rotateX(90deg)'
-        // offset: 0.4
-      },
-      {
-        transform: 'perspective(200px) rotateX(0deg)',
-        // zIndex: 0,
-        // opacity: 0.0,
-        // offset: 0
-      }
-    ];
-    var timing = {
-      duration: 1000,
-      iterations: iterations,
-      easing: 'linear',
-      fill: 'forwards',
-      direction: 'alternate'
-    };
-    if (anime === 'both') {
-      flip.current.animate(keyframes, timing);
-    }
-
-    if (anime === 'bottom' || anime === 'both') {
-      setTimeout(() => {
-        timing.fill = 'both';
-        flip2.current.animate(keyframes2, timing);
-      }, 500);
-    }
-  }, [flip, flip2]);
-
+const Flips = ({ anime, number, index, bg }) => {
   const flip = useRef(null);
   const flip2 = useRef(null);
 
+  var keyframes = [
+    { transform: 'perspective(200px) rotateX(0deg)' },
+    { transform: 'perspective(200px) rotateX(-90deg)' },
+    { transform: 'perspective(200px) rotateX(-180deg)' }
+  ];
+  var timing = {
+    duration: 500,
+    iterations: 1,
+    easing: 'linear',
+    fill: 'forwards',
+    direction: 'alternate'
+  };
+
+  useEffect(() => {
+    if (anime === number) {
+      flip.current.animate(keyframes, timing);
+      flip2.current.animate(keyframes, timing);
+    }
+  }, [anime, number]);
+
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '37px',
-        height: '50px',
-        lineHeight: '50px',
-        color: '#0d0d0d',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: index
-      }}
-    >
-      <div
-        ref={flip}
-        className="up"
-        style={{
-          position: 'absolute',
-          backgroundColor: 'black',
-          transformOrigin: '50% 100%',
-          top: 0,
-          zIndex: 1,
-          width: '100%',
-          height: '50%',
-          backfaceVisibility: 'hidden',
-          display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center'
-        }}
-      >
-        <div
-          className="inn"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '200%',
-            color: 'white'
-          }}
-        >
-          {number}
-        </div>
+    <div style={styles.outter}>
+      <div ref={flip} style={styles.front}>
+        <div style={styles.letter}>{number}</div>
       </div>
-      <div
-        ref={flip2}
-        className="down"
-        style={{
-          position: 'absolute',
-          backgroundColor: 'black',
-          transformOrigin: '50% 0',
-          bottom: 0,
-          textAlign: 'center',
-          width: '100%',
-          height: '50%',
-          overflow: 'hidden',
-          zIndex: 1
-        }}
-      >
-        <div
-          className="inn"
-          style={{
-            display: 'flex',
-            position: 'absolute',
-            left: 0,
-            bottom: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-            // textAlign: 'center',
-            width: '100%',
-            height: '200%',
-            color: 'white'
-          }}
-        >
-          {number}
-        </div>
+      <div ref={flip2} style={styles.front2}>
+        <div style={styles.letter2}>{number + 1}</div>
       </div>
     </div>
   );
 };
 
 const Flipclock = () => {
-  const [front, setFront] = useState(2)
-  const [backAnime, setBackAnime] = useState('none');
-  const style = {
-    height: '116px',
-    width: '460px',
-    position: 'relative'
-  };
+  const [anime, setFront] = useState(0);
 
-  const numbers = [...Array(10).keys()];
-  console.log(numbers);
+  useEffect(() => {
+    setTimeout(() => {
+      if (anime === 9) {
+        setFront(0);
+        return;
+      }
+      setFront(anime + 1);
+    }, 2000);
+  }, [anime]);
 
-  setTimeout(() => {
-    setBackAnime('bottom');
-  }, 1000)
+  console.log('anime', anime);
   return (
-    <div style={style}>
-      <Flips number={1} anime={backAnime} index={0} />
-      <Flips number={0} anime={'both'} />
-      {/* <Flips number={2} index={1} />
-      <Flips number={3} index={1} />
-      <Flips number={4} index={1} />
-      <Flips number={5} index={1} />
-      <Flips number={6} index={1} />
-      <Flips number={7} index={1} />
-      <Flips number={8} index={1} />
-      <Flips number={9} index={1} /> */}
+    <div style={styles.container}>
+      <Flips number={9} bg="black" anime={anime} index={anime == 9 ? 1 : 0} />
+      <Flips number={8} bg="black" anime={anime} index={anime == 8 ? 1 : 0} />
+      <Flips number={7} bg="black" anime={anime} index={anime == 7 ? 1 : 0} />
+      <Flips number={6} bg="black" anime={anime} index={anime == 6 ? 1 : 0} />
+      <Flips number={5} bg="black" anime={anime} index={anime == 5 ? 1 : 0} />
+      <Flips number={4} bg="black" anime={anime} index={anime == 4 ? 1 : 0} />
+      <Flips number={3} bg="black" anime={anime} index={anime == 3 ? 1 : 0} />
+      <Flips number={2} bg="black" anime={anime} index={anime == 2 ? 1 : 0} />
+      <Flips number={1} bg="black" anime={anime} index={anime == 1 ? 1 : 0} />
+      <Flips number={0} bg="black" anime={anime} index={anime == 0 ? 1 : 0} />
     </div>
   );
 };
