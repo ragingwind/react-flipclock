@@ -17,18 +17,19 @@ export default {
     alignItems: 'center',
     zIndex: 1 // index
   },
-  front: {
+  upper: {
     position: 'absolute',
     backgroundColor: 'black',
     transformOrigin: '50% 100%',
     top: 0,
-    zIndex: 2,
     width: '100%',
     height: '50%',
     backfaceVisibility: 'hidden',
     display: 'flex',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    zIndex: 2,
+    overflow: 'hidden',
   },
   letter: {
     display: 'flex',
@@ -38,7 +39,7 @@ export default {
     height: '200%',
     color: 'white'
   },
-  front2: {
+  bottom: {
     position: 'absolute',
     backgroundColor: 'black',
     // transformOrigin: '50% 0',
@@ -50,6 +51,19 @@ export default {
     height: '50%',
     overflow: 'hidden',
     zIndex: 1
+  },
+  bottom2: {
+    position: 'absolute',
+    backgroundColor: 'black',
+    transformOrigin: '50% 100%',
+    transform: 'rotateX(-180deg)',
+    bottom: 0,
+    top: 0,
+    textAlign: 'center',
+    width: '100%',
+    height: '50%',
+    overflow: 'hidden',
+    zIndex: 0
   },
   letter2: {
     display: 'flex',
