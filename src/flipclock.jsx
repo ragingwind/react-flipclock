@@ -8,7 +8,7 @@ var keyframes = [
 ];
 
 var timing = {
-  duration: 2000,
+  duration: 1000,
   iterations: 1,
   easing: 'linear',
   fill: 'forwards',
@@ -16,26 +16,26 @@ var timing = {
 };
 
 const Flips = ({ anime, number }) => {
-  const flip = useRef(null);
-  const flip2 = useRef(null);
+  const upper = useRef(null);
+  const reverse = useRef(null);
 
   useEffect(() => {
     if (anime === number) {
-      flip.current && flip.current.animate(keyframes, timing);
-      flip2.current && flip2.current.animate(keyframes, timing);
+      upper.current && upper.current.animate(keyframes, timing);
+      reverse.current && reverse.current.animate(keyframes, timing);
     }
   }, [anime]);
 
   return (
     <div style={{ ...styles.outter, zIndex: anime === number ? 1 : 0 }}>
-      <div ref={flip} style={styles.upper}>
-        <div style={styles.letter}>{number}</div>
+      <div ref={upper} style={styles.upper}>
+        <div style={styles.content}>{number}</div>
       </div>
-      <div ref={flip2} style={styles.bottom}>
-        <div style={styles.letter2}>{number < 9 ? number + 1 : 0}</div>
+      <div ref={reverse} style={styles.reverse}>
+        <div style={styles.reverseContent}>{number < 9 ? number + 1 : 0}</div>
       </div>
-      <div style={styles.bottom2}>
-        <div style={styles.letter2}>{number}</div>
+      <div style={styles.bottom}>
+        <div style={styles.reverseContent}>{number}</div>
       </div>
     </div>
   );
@@ -48,10 +48,8 @@ const Flipclock = () => {
   useEffect(() => {
     setTimeout(() => {
       setFront(anime < 9 ? anime + 1 : 0);
-    }, 2000);
+    }, 1000);
   }, [anime]);
-
-  console.log('anime', anime);
   
   return (
     <div style={styles.container}>

@@ -1,85 +1,87 @@
+const flex = {
+  display: 'flex',
+  justifyContent: 'center'
+};
+
+const fullWidth = height => {
+  return {
+    width: '100%',
+    height: height
+  };
+};
+
+const font = {
+  lineHeight: '50px',
+  fontSize: '150px',
+  color: '#efefef'
+};
+
+const position = pos => {
+  const figures = pos.split(' ');
+  const position = {
+    position: 'absolute'
+  };
+
+  figures[0] && figures[0] !== 'null' && (position['top'] = figures[0]);
+  figures[1] && figures[1] !== 'null' && (position['bottom'] = figures[1]);
+  figures[2] && figures[2] !== 'null' && (position['left'] = figures[2]);
+
+  return position;
+};
+
 export default {
   container: {
-    width: '200px',
-    height: '320px',
-    position: 'relative'
+    ...fullWidth('100%'),
+    position: 'relative',
+    willChange: 'transform'
   },
   outter: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    lineHeight: '50px',
-    fontSize: '150px',
-    color: '#0d0d0d',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1
+    ...flex,
+    ...fullWidth('100%'),
+    ...font,
+    ...position('0 null 0')
   },
   upper: {
-    position: 'absolute',
-    backgroundColor: 'black',
-    transformOrigin: '50% 100%',
-    top: 0,
-    width: '100%',
-    height: '50%',
-    backfaceVisibility: 'hidden',
-    display: 'flex',
-    justifyContent: 'center',
+    ...flex,
+    ...fullWidth('50%'),
+    ...position('0'),
     alignContent: 'center',
     zIndex: 2,
     overflow: 'hidden',
+    transformOrigin: '50% 100%',
+    backfaceVisibility: 'hidden',
+    backgroundColor: 'black',
     borderBottom: 'solid 1px white'
   },
-  letter: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '200%',
-    color: 'white'
+  reverse: {
+    ...fullWidth('50%'),
+    ...position('0 0'),
+    zIndex: 1,
+    overflow: 'hidden',
+    transformOrigin: '50% 100%',
+    backgroundColor: 'black',
+    borderBottom: 'solid 1px white'
   },
   bottom: {
-    position: 'absolute',
-    backgroundColor: 'black',
-    transformOrigin: '50% 100%',
-    bottom: 0,
-    top: 0,
-    textAlign: 'center',
-    width: '100%',
-    height: '50%',
-    overflow: 'hidden',
-    zIndex: 1,
-    borderBottom: 'solid 1px white'
-  },
-  bottom2: {
-    position: 'absolute',
-    backgroundColor: 'black',
+    ...fullWidth('50%'),
+    ...position('0 0'),
+    zIndex: 0,
     transformOrigin: '50% 100%',
     transform: 'rotateX(-180deg)',
-    bottom: 0,
-    top: 0,
-    textAlign: 'center',
-    width: '100%',
-    height: '50%',
     overflow: 'hidden',
-    zIndex: 0,
+    backgroundColor: 'black',
     borderBottom: 'solid 1px white'
   },
-  letter2: {
-    display: 'flex',
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    top: 0,
-    // transformOrigin: 'bottom',
-    transform: 'rotate3d(1, 0, 0, 180deg)',
-    justifyContent: 'center',
+  content: {
+    ...flex,
+    ...fullWidth('200%'),
+    alignItems: 'center'
+  },
+  reverseContent: {
+    ...flex,
+    ...fullWidth('200%'),
+    ...position('0 0 0'),
     alignItems: 'center',
-    width: '100%',
-    height: '200%',
-    color: 'white'
+    transform: 'rotate3d(1, 0, 0, 180deg)'
   }
 };
