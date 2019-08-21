@@ -2,9 +2,9 @@ import React, { useRef, useEffect, useState, useMemo } from 'react';
 import styles from './styles';
 
 var keyframes = [
-  { transform: 'perspective(200px) rotateX(0deg)' },
-  { transform: 'perspective(200px) rotateX(-90deg)' },
-  { transform: 'perspective(200px) rotateX(-180deg)' }
+  { transform: 'perspective(800px) rotateX(0deg)' },
+  { transform: 'perspective(800px) rotateX(-90deg)' },
+  { transform: 'perspective(800px) rotateX(-180deg)' }
 ];
 
 var timing = {
@@ -21,8 +21,8 @@ const Flips = ({ anime, number }) => {
 
   useEffect(() => {
     if (anime === number) {
-      flip.current.animate(keyframes, timing);
-      flip2.current.animate(keyframes, timing);
+      flip.current && flip.current.animate(keyframes, timing);
+      flip2.current && flip2.current.animate(keyframes, timing);
     }
   }, [anime]);
 
@@ -43,30 +43,28 @@ const Flips = ({ anime, number }) => {
 
 const Flipclock = () => {
   const [anime, setFront] = useState(-1);
+  const isAnimate = number => anime === number || anime === number -1
 
   useEffect(() => {
     setTimeout(() => {
-      if (anime === 9) {
-        setFront(0);
-        return;
-      }
-      setFront(anime + 1);
+      setFront(anime < 9 ? anime + 1 : 0);
     }, 2000);
   }, [anime]);
 
   console.log('anime', anime);
+  
   return (
     <div style={styles.container}>
-      {(anime === 9 || anime === 9 - 1) && <Flips number={9} anime={anime} />}
-      {(anime === 8 || anime === 8 - 1) && <Flips number={8} anime={anime} />}
-      {(anime === 7 || anime === 7 - 1) && <Flips number={7} anime={anime} />}
-      {(anime === 6 || anime === 6 - 1) && <Flips number={6} anime={anime} />}
-      {(anime === 5 || anime === 5 - 1) && <Flips number={5} anime={anime} />}
-      {(anime === 4 || anime === 4 - 1) && <Flips number={4} anime={anime} />}
-      {(anime === 3 || anime === 3 - 1) && <Flips number={3} anime={anime} />}
-      {(anime === 2 || anime === 2 - 1) && <Flips number={2} anime={anime} />}
-      {(anime === 1 || anime === 1 - 1) && <Flips number={1} anime={anime} />}
-      {(anime === 0 || anime === -1 || anime === 9) && <Flips number={0} anime={anime} />}
+      {isAnimate(9) && <Flips number={9} anime={anime} />}
+      {isAnimate(8) && <Flips number={8} anime={anime} />}
+      {isAnimate(7) && <Flips number={7} anime={anime} />}
+      {isAnimate(6) && <Flips number={6} anime={anime} />}
+      {isAnimate(5) && <Flips number={5} anime={anime} />}
+      {isAnimate(4) && <Flips number={4} anime={anime} />}
+      {isAnimate(3) && <Flips number={3} anime={anime} />}
+      {isAnimate(2) && <Flips number={2} anime={anime} />}
+      {isAnimate(1) && <Flips number={1} anime={anime} />}
+      {(isAnimate(0) || anime === 9) && <Flips number={0} anime={anime} />}
     </div>
   );
 };

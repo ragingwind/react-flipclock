@@ -1,21 +1,22 @@
 export default {
   container: {
-    height: '116px',
-    width: '460px',
+    width: '200px',
+    height: '320px',
     position: 'relative'
   },
   outter: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '37px',
-    height: '50px',
+    width: '100%',
+    height: '100%',
     lineHeight: '50px',
+    fontSize: '150px',
     color: '#0d0d0d',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1 // index
+    zIndex: 1
   },
   upper: {
     position: 'absolute',
@@ -30,6 +31,7 @@ export default {
     alignContent: 'center',
     zIndex: 2,
     overflow: 'hidden',
+    borderBottom: 'solid 1px white'
   },
   letter: {
     display: 'flex',
@@ -42,7 +44,6 @@ export default {
   bottom: {
     position: 'absolute',
     backgroundColor: 'black',
-    // transformOrigin: '50% 0',
     transformOrigin: '50% 100%',
     bottom: 0,
     top: 0,
@@ -50,7 +51,8 @@ export default {
     width: '100%',
     height: '50%',
     overflow: 'hidden',
-    zIndex: 1
+    zIndex: 1,
+    borderBottom: 'solid 1px white'
   },
   bottom2: {
     position: 'absolute',
@@ -63,7 +65,8 @@ export default {
     width: '100%',
     height: '50%',
     overflow: 'hidden',
-    zIndex: 0
+    zIndex: 0,
+    borderBottom: 'solid 1px white'
   },
   letter2: {
     display: 'flex',
