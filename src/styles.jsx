@@ -29,6 +29,14 @@ const position = pos => {
   return position;
 };
 
+const flipStyle = {
+  borderTopLeftRadius: '12px',
+  borderTopRightRadius: '12px',
+  backgroundColor: '#1f1f1f',
+  backgroundImage: 'linear-gradient(-180deg, rgba(0,0,0,1), rgba(50,50,50,1))',
+  borderTop: '1px solid #000'
+};
+
 export default {
   container: {
     ...fullWidth('100%'),
@@ -51,7 +59,8 @@ export default {
     transformOrigin: '50% 100%',
     backfaceVisibility: 'hidden',
     backgroundColor: 'black',
-    borderBottom: 'solid 1px white'
+    borderBottom: 'solid 1px white',
+    ...flipStyle
   },
   reverse: {
     ...fullWidth('50%'),
@@ -60,7 +69,8 @@ export default {
     overflow: 'hidden',
     transformOrigin: '50% 100%',
     backgroundColor: 'black',
-    borderBottom: 'solid 1px white'
+    borderBottom: 'solid 1px white',
+    ...flipStyle,
   },
   bottom: {
     ...fullWidth('50%'),
@@ -70,7 +80,8 @@ export default {
     transform: 'rotateX(-180deg)',
     overflow: 'hidden',
     backgroundColor: 'black',
-    borderBottom: 'solid 1px white'
+    borderBottom: 'solid 1px white',
+    ...flipStyle,
   },
   content: {
     ...flex,
