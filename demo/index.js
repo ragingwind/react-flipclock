@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Flipclock from '../src/flipclock';
 
 const App = (
-  <div style={{ width: 640, height: 460 }}>
+  <div style={{ width: 200, height: 260 }}>
     <Flipclock />
   </div>
 );
