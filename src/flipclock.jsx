@@ -15,16 +15,16 @@ var timing = {
   direction: 'alternate'
 };
 
-const Flips = ({ anime, number }) => {
+const Flips = ({ animate, number }) => {
   const upper = useRef(null);
   const reverse = useRef(null);
 
   useEffect(() => {
-    if (anime === number) {
+    if (animate === number) {
       upper.current && upper.current.animate(keyframes, timing);
       reverse.current && reverse.current.animate(keyframes, timing);
     }
-  }, [anime]);
+  }, [animate]);
 
   return (
     <div style={{ ...styles.outter, zIndex: anime === number ? 1 : 0 }}>
@@ -42,27 +42,27 @@ const Flips = ({ anime, number }) => {
 };
 
 const Flipclock = () => {
-  const [anime, setFront] = useState(-1);
-  const isAnimate = number => anime === number || anime === number -1
+  const [animate, setAnimate] = useState(-1);
+  const isAnimate = number => animate === number || animate === number -1
 
   useEffect(() => {
     setTimeout(() => {
-      setFront(anime < 9 ? anime + 1 : 0);
+      setAnimate(animate < 9 ? animate + 1 : 0);
     }, 1000);
-  }, [anime]);
+  }, [animate]);
   
   return (
     <div style={styles.container}>
-      {isAnimate(9) && <Flips number={9} anime={anime} />}
-      {isAnimate(8) && <Flips number={8} anime={anime} />}
-      {isAnimate(7) && <Flips number={7} anime={anime} />}
-      {isAnimate(6) && <Flips number={6} anime={anime} />}
-      {isAnimate(5) && <Flips number={5} anime={anime} />}
-      {isAnimate(4) && <Flips number={4} anime={anime} />}
-      {isAnimate(3) && <Flips number={3} anime={anime} />}
-      {isAnimate(2) && <Flips number={2} anime={anime} />}
-      {isAnimate(1) && <Flips number={1} anime={anime} />}
-      {(isAnimate(0) || anime === 9) && <Flips number={0} anime={anime} />}
+      {isAnimate(9) && <Flips number={9} animate={animate} />}
+      {isAnimate(8) && <Flips number={8} animate={animate} />}
+      {isAnimate(7) && <Flips number={7} animate={animate} />}
+      {isAnimate(6) && <Flips number={6} animate={animate} />}
+      {isAnimate(5) && <Flips number={5} animate={animate} />}
+      {isAnimate(4) && <Flips number={4} animate={animate} />}
+      {isAnimate(3) && <Flips number={3} animate={animate} />}
+      {isAnimate(2) && <Flips number={2} animate={animate} />}
+      {isAnimate(1) && <Flips number={1} animate={animate} />}
+      {(isAnimate(0) || animate === 9) && <Flips number={0} animate={animate} />}
     </div>
   );
 };
