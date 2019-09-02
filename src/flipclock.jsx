@@ -15,7 +15,7 @@ var timing = {
   direction: 'alternate'
 };
 
-const Flips = ({ animate, number }) => {
+const Flip = ({ animate, number, max = 9 }) => {
   const upper = useRef(null);
   const reverse = useRef(null);
 
@@ -27,12 +27,12 @@ const Flips = ({ animate, number }) => {
   }, [animate]);
 
   return (
-    <div style={{ ...styles.outter, zIndex: anime === number ? 1 : 0 }}>
+    <div style={{ ...styles.outter, zIndex: animate === number ? 1 : 0 }}>
       <div ref={upper} style={styles.upper}>
         <div style={styles.content}>{number}</div>
       </div>
       <div ref={reverse} style={styles.reverse}>
-        <div style={styles.reverseContent}>{number < 9 ? number + 1 : 0}</div>
+        <div style={styles.reverseContent}>{number < max ? number + 1 : 0}</div>
       </div>
       <div style={styles.bottom}>
         <div style={styles.reverseContent}>{number}</div>
@@ -41,28 +41,70 @@ const Flips = ({ animate, number }) => {
   );
 };
 
-const Flipclock = () => {
-  const [animate, setAnimate] = useState(-1);
-  const isAnimate = number => animate === number || animate === number -1
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAnimate(animate < 9 ? animate + 1 : 0);
-    }, 1000);
-  }, [animate]);
-  
+const FlipFront = ({ animate }) => {
+  const visible = number => animate === number || animate === number - 1;
   return (
     <div style={styles.container}>
-      {isAnimate(9) && <Flips number={9} animate={animate} />}
-      {isAnimate(8) && <Flips number={8} animate={animate} />}
-      {isAnimate(7) && <Flips number={7} animate={animate} />}
-      {isAnimate(6) && <Flips number={6} animate={animate} />}
-      {isAnimate(5) && <Flips number={5} animate={animate} />}
-      {isAnimate(4) && <Flips number={4} animate={animate} />}
-      {isAnimate(3) && <Flips number={3} animate={animate} />}
-      {isAnimate(2) && <Flips number={2} animate={animate} />}
-      {isAnimate(1) && <Flips number={1} animate={animate} />}
-      {(isAnimate(0) || animate === 9) && <Flips number={0} animate={animate} />}
+      {visible(5) && <Flip max={5} number={5} animate={animate} />}
+      {visible(4) && <Flip max={5} number={4} animate={animate} />}
+      {visible(3) && <Flip max={5} number={3} animate={animate} />}
+      {visible(2) && <Flip max={5} number={2} animate={animate} />}
+      {visible(1) && <Flip max={5} number={1} animate={animate} />}
+      {(visible(0) || animate === 5) && <Flip max={5} number={0} animate={animate} />}
+    </div>
+  );
+};
+
+const FlipBack = ({ animate }) => {
+  const visible = number => animate === number || animate === number - 1;
+  return (
+    <div style={styles.container}>
+      {visible(9) && <Flip number={9} animate={animate} />}
+      {visible(8) && <Flip number={8} animate={animate} />}
+      {visible(7) && <Flip number={7} animate={animate} />}
+      {visible(6) && <Flip number={6} animate={animate} />}
+      {visible(5) && <Flip number={5} animate={animate} />}
+      {visible(4) && <Flip number={4} animate={animate} />}
+      {visible(3) && <Flip number={3} animate={animate} />}
+      {visible(2) && <Flip number={2} animate={animate} />}
+      {visible(1) && <Flip number={1} animate={animate} />}
+      {(visible(0) || animate === 9) && <Flip number={0} animate={animate} />}
+    </div>
+  );
+};
+
+const getDateTime = () => {
+  const split = t => {
+    const a = Math.max(Math.floor(t / 10), 0)
+    const b = Math.max(t % 10, 0)
+    return [a, b]
+  };
+  const datetime = new Date();
+  const h = datetime.getHours();
+  const m = datetime.getMinutes();
+  const s = datetime.getSeconds();
+  return [...split(h), ...split(m), ...split(s)];
+};
+
+const Flipclock = () => {
+  const [datetime, setDateTime] = useState(getDateTime());
+  const sec = t => t - 1 < 0 ? 9 : t - 1
+  const sec2 = t => t - 1 < 0 ? 5 : t - 1
+  const time = (t, t2) => t === 9 ? (t2 + 1 <= 6 ? t2 + 1 : 0) : t2
+  useEffect(() => {
+    setTimeout(() => {
+      setDateTime(getDateTime());
+    }, 1000);
+  }, [datetime]);
+
+  return (
+    <div style={{ display: 'flex', height: '200px', width: '900px' }}>
+      <FlipFront animate={time(datetime[1] - 1, sec2(datetime[0]))} />
+      <FlipBack animate={datetime[1] - 1} />
+      <FlipFront animate={time(datetime[3] - 1, sec2(datetime[2]))} />
+      <FlipBack animate={datetime[3] - 1} />
+      <FlipFront animate={time(datetime[5] - 1, sec2(datetime[4]))} />
+      <FlipBack animate={sec(datetime[5])} />
     </div>
   );
 };
